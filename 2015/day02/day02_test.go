@@ -1,4 +1,4 @@
-package day01
+package day02
 
 import (
 	"advent-of-code-go/util/tests"
@@ -9,18 +9,21 @@ import (
 //go:embed input.txt
 var input string
 
+var exampleInput = `2x3x4
+1x1x10`
+
 func TestPart1(t *testing.T) {
 	testCases := tests.TestInputs{
-		{"Example", ")())())", -3},
-		{"Actual", input, 138},
+		{"Example", exampleInput, 101},
+		{"Actual", input, 1586300},
 	}
 	tests.RunWithTestCases(testCases, part1, t)
 }
 
 func TestPart2(t *testing.T) {
 	testCases := tests.TestInputs{
-		{"Example", "()())", 5},
-		{"Actual", input, 1771},
+		{"Example", exampleInput, 48},
+		{"Actual", input, 3737498},
 	}
 	tests.RunWithTestCases(testCases, part2, t)
 }
