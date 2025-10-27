@@ -1,8 +1,8 @@
 package day02
 
 import (
-	"advent-of-code-go/cast"
-	"advent-of-code-go/mathy"
+	"advent-of-code-go/util/cast"
+	"advent-of-code-go/util/mathy"
 	"regexp"
 	"strings"
 )
