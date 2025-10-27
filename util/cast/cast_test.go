@@ -1,7 +1,7 @@
 package cast_test
 
 import (
-	"advent-of-code-go/cast"
+	"advent-of-code-go/util/cast"
 	"fmt"
 	"testing"
 )
