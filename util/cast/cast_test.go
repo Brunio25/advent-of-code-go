@@ -6,17 +6,17 @@ import (
 	"testing"
 )
 
-var testCases = []struct {
-	input    string
-	expected int
-}{
-	{"1", 1},
-	{"123", 123},
-	{"9901293", 9901293},
-	{"-15", -15},
-}
-
 func TestToIntSuccess(t *testing.T) {
+	testCases := []struct {
+		input    string
+		expected int
+	}{
+		{"1", 1},
+		{"123", 123},
+		{"9901293", 9901293},
+		{"-15", -15},
+	}
+
 	for _, tc := range testCases {
 		t.Run(fmt.Sprintf(`"%s"->%v`, tc.input, tc.expected), func(t *testing.T) {
 			if actual := cast.ToInt(tc.input); actual != tc.expected {
@@ -37,4 +37,24 @@ func TestToIntInvalidInput(t *testing.T) {
 		}
 	}()
 	cast.ToInt("10fail")
+}
+
+func TestToStringSuccess(t *testing.T) {
+	testCases := []struct {
+		input    interface{}
+		expected string
+	}{
+		{32, "32"},
+		{uint16(123), "123"},
+		{'A', "A"},
+		{byte('i'), "i"},
+	}
+
+	for _, tc := range testCases {
+		t.Run(fmt.Sprintf(`"%s"->%v`, tc.input, tc.expected), func(t *testing.T) {
+			if actual := cast.ToString(tc.input); actual != tc.expected {
+				t.Errorf("cast.ToString() = %v, Expected %v", actual, tc.expected)
+			}
+		})
+	}
 }
