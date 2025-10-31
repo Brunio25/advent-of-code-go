@@ -27,8 +27,8 @@ func TestToIntSuccess(t *testing.T) {
 }
 
 func TestToIntInvalidInput(t *testing.T) {
-	t.Helper()
 	defer func() {
+		t.Helper()
 		expectedError := `error converting string to int strconv.Atoi: parsing "10fail": invalid syntax`
 		if r := recover(); r == nil {
 			t.Error("expected panic on cast.ToInt(), but no panic occurred")

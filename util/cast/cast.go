@@ -8,7 +8,7 @@ import (
 // ToInt will convert an arg to an int
 // Supported types:
 //   - string
-func ToInt(arg interface{}) int {
+func ToInt(arg any) int {
 	var val int
 	switch arg.(type) {
 	case string:
@@ -29,7 +29,7 @@ func ToInt(arg interface{}) int {
 //   - uint16
 //   - rune
 //   - byte
-func ToString(arg interface{}) string {
+func ToString(arg any) string {
 	var str string
 	switch arg.(type) {
 	case int:
