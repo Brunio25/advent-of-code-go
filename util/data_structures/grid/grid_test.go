@@ -28,8 +28,8 @@ func TestNewGridSuccess(t *testing.T) {
 }
 
 func TestNewGridInvalidInput(t *testing.T) {
-	t.Helper()
 	defer func() {
+		t.Helper()
 		expectedError := `grid cannot have negative or zero dimensions`
 		if r := recover(); r == nil {
 			t.Error("expected panic on grid.NewGrid(), but no panic occurred")
@@ -62,8 +62,8 @@ func TestNewGridDefaultSuccess(t *testing.T) {
 }
 
 func TestNewGridDefaultInvalidInput(t *testing.T) {
-	t.Helper()
 	defer func() {
+		t.Helper()
 		expectedError := `grid cannot have negative or zero dimensions`
 		if r := recover(); r == nil {
 			t.Error("expected panic on grid.NewGrid(), but no panic occurred")
@@ -123,7 +123,6 @@ func TestSetValueFromToFunc(t *testing.T) {
 }
 
 func TestForEach(t *testing.T) {
-	t.Helper()
 	g := grid.NewGrid[int](2, 2)
 	g[0][0], g[0][1], g[1][0], g[1][1] = 0, 1, 2, 3
 	expectedCoordsWithValues := []struct {
@@ -138,6 +137,7 @@ func TestForEach(t *testing.T) {
 
 	i := 0
 	g.ForEach(func(x, y int, v int) {
+		t.Helper()
 		expected := expectedCoordsWithValues[i]
 		if expected.c.X != x || expected.c.Y != y || expected.val != v {
 			t.Errorf("grid.ForEach() = (Coordinates{%v, %v}, val = %v), Expected (Coordinates{%v, %v}, val = %v)",
