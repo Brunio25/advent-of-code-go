@@ -13,7 +13,7 @@ var exampleInput = `2x3x4
 1x1x10`
 
 func TestPart1(t *testing.T) {
-	testCases := tests.TestInputs{
+	testCases := tests.TestInputs[int]{
 		{"Example", exampleInput, 101},
 		{"Actual", input, 1586300},
 	}
@@ -21,7 +21,7 @@ func TestPart1(t *testing.T) {
 }
 
 func TestPart2(t *testing.T) {
-	testCases := tests.TestInputs{
+	testCases := tests.TestInputs[int]{
 		{"Example", exampleInput, 48},
 		{"Actual", input, 3737498},
 	}

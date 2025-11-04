@@ -48,6 +48,7 @@ func TestToStringSuccess(t *testing.T) {
 		{uint16(123), "123"},
 		{'A', "A"},
 		{byte('i'), "i"},
+		{[]byte("str"), "str"},
 	}
 
 	for _, tc := range testCases {

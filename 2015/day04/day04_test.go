@@ -10,7 +10,7 @@ import (
 var input string
 
 func TestPart1(t *testing.T) {
-	testCases := tests.TestInputs{
+	testCases := tests.TestInputs[int]{
 		{"Example1", "abcdef", 609043},
 		{"Example2", "pqrstuv", 1048970},
 		{"Actual", input, 346386},
@@ -19,7 +19,7 @@ func TestPart1(t *testing.T) {
 }
 
 func TestPart2(t *testing.T) {
-	testCases := tests.TestInputs{
+	testCases := tests.TestInputs[int]{
 		{"Actual", input, 9958218},
 	}
 	tests.RunWithTestCases(testCases, part2, t)

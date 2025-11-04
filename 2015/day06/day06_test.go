@@ -10,7 +10,7 @@ import (
 var input string
 
 func TestPart1(t *testing.T) {
-	testCases := tests.TestInputs{
+	testCases := tests.TestInputs[int]{
 		{"Example1", "turn on 0,0 through 999,999", 1000000},
 		{"Example2", "toggle 0,0 through 999,0", 1000},
 		{"Example3", "turn off 499,499 through 500,500", 0},
@@ -20,7 +20,7 @@ func TestPart1(t *testing.T) {
 }
 
 func TestPart2(t *testing.T) {
-	testCases := tests.TestInputs{
+	testCases := tests.TestInputs[int]{
 		{"Example1", "turn on 0,0 through 0,0", 1},
 		{"Example2", "toggle 0,0 through 999,999", 2000000},
 		{"Actual", input, 14110788},
