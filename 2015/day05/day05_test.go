@@ -16,7 +16,7 @@ haegwjzuvuyypxyu
 dvszwmarrgswjxmb`
 
 func TestPart1(t *testing.T) {
-	testCases := tests.TestInputs{
+	testCases := tests.TestInputs[int]{
 		{"Example", examplePart1, 2},
 		{"Actual", input, 236},
 	}
@@ -29,7 +29,7 @@ uurcxstgmygtbstg
 ieodomkazucvgmuy`
 
 func TestPart2(t *testing.T) {
-	testCases := tests.TestInputs{
+	testCases := tests.TestInputs[int]{
 		{"Example", examplePart2, 2},
 		{"Actual", input, 51},
 	}

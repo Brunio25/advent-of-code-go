@@ -14,7 +14,7 @@ var exampleInput = `"acb"
 "\x27"`
 
 func TestPart1(t *testing.T) {
-	testCases := tests.TestInputs{
+	testCases := tests.TestInputs[int]{
 		{"Example", exampleInput, 21 - 11},
 		{"Actual", input, 1371},
 	}
@@ -22,7 +22,7 @@ func TestPart1(t *testing.T) {
 }
 
 func TestPart2(t *testing.T) {
-	testCases := tests.TestInputs{
+	testCases := tests.TestInputs[int]{
 		{"Example", exampleInput, 36 - 21},
 		{"Actual", input, 2117},
 	}

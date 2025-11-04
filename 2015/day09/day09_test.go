@@ -14,7 +14,7 @@ London to Belfast = 518
 Dublin to Belfast = 141`
 
 func TestPart1(t *testing.T) {
-	testCases := tests.TestInputs{
+	testCases := tests.TestInputs[int]{
 		{"Example", exampleInput, 605},
 		{"Actual", input, 141},
 	}
@@ -22,7 +22,7 @@ func TestPart1(t *testing.T) {
 }
 
 func TestPart2(t *testing.T) {
-	testCases := tests.TestInputs{
+	testCases := tests.TestInputs[int]{
 		{"Example", exampleInput, 982},
 		{"Actual", input, 736},
 	}

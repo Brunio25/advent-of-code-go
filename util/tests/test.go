@@ -7,13 +7,13 @@ import (
 	"testing"
 )
 
-type TestInputs []struct {
+type TestInputs[T comparable] []struct {
 	Name     string
 	Input    string
-	Expected int
+	Expected T
 }
 
-func RunWithTestCases(testCases TestInputs, fun func(string) int, t *testing.T) {
+func RunWithTestCases[T comparable](testCases TestInputs[T], fun func(string) T, t *testing.T) {
 	t.Helper()
 	for _, tc := range testCases {
 		t.Run(tc.Name, func(t *testing.T) {

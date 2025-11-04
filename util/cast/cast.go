@@ -29,6 +29,7 @@ func ToInt(arg any) int {
 //   - uint16
 //   - rune
 //   - byte
+//   - []byte
 func ToString(arg any) string {
 	var str string
 	switch arg.(type) {
@@ -40,8 +41,10 @@ func ToString(arg any) string {
 		str = string(arg.(rune))
 	case byte:
 		str = string(rune(arg.(byte)))
+	case []byte:
+		str = string(arg.([]byte))
 	default:
-		panic(fmt.Sprintf("unsupported type for string cating %T", arg))
+		panic(fmt.Sprintf("unsupported type for string casting %T", arg))
 	}
 	return str
 }

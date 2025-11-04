@@ -10,7 +10,7 @@ import (
 var input string
 
 func TestPart1(t *testing.T) {
-	testCases := tests.TestInputs{
+	testCases := tests.TestInputs[int]{
 		{"Example", ")())())", -3},
 		{"Actual", input, 138},
 	}
@@ -18,7 +18,7 @@ func TestPart1(t *testing.T) {
 }
 
 func TestPart2(t *testing.T) {
-	testCases := tests.TestInputs{
+	testCases := tests.TestInputs[int]{
 		{"Example", "()())", 5},
 		{"Actual", input, 1771},
 	}
