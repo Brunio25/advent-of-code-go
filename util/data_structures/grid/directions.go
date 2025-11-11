@@ -20,7 +20,7 @@ func Right(c geom.Coordinates) geom.Coordinates {
 	return geom.Coordinates{X: c.X + 1, Y: c.Y}
 }
 
-func leftUp(c geom.Coordinates) geom.Coordinates {
+func LeftUp(c geom.Coordinates) geom.Coordinates {
 	return geom.Coordinates{X: c.X - 1, Y: c.Y - 1}
 }
 

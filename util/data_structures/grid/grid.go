@@ -48,6 +48,14 @@ func (g Grid[T]) ValueAt(x, y int) T {
 	return g[y][x]
 }
 
+func (g Grid[T]) SetValueAtCoordinates(c geom.Coordinates, val T) {
+	g[c.Y][c.X] = val
+}
+
+func (g Grid[T]) SetValueAt(x, y int, val T) {
+	g[y][x] = val
+}
+
 func (g Grid[T]) SetValueFromTo(from, to geom.Coordinates, dir Direction, value T) {
 	g.SetValueFromToFunc(from, to, dir, func(_ T) T { return value })
 }
@@ -56,6 +64,10 @@ func (g Grid[T]) SetValueFromToFunc(from, to geom.Coordinates, dir Direction, tr
 	for c := range coordsBetween(from, to, dir) {
 		g[c.Y][c.X] = transform(g.ValueAtCoordinates(c))
 	}
+}
+
+func (g Grid[T]) In(coords geom.Coordinates) bool {
+	return coords.Y >= 0 && coords.Y < len(g) && coords.X >= 0 && coords.X < len(g[0])
 }
 
 func coordsBetween(from, to geom.Coordinates, dir Direction) iter.Seq[geom.Coordinates] {
@@ -90,6 +102,29 @@ func (g Grid[T]) CountFunc(predicate func(T) bool) int {
 		}
 	})
 	return count
+}
+
+func (g Grid[T]) AdjacentCoords(x, y int) []geom.Coordinates {
+	directions := []Direction{Up, RightUp, Right, RightDown, Down, LeftDown, Left, LeftUp}
+	from := geom.Coordinates{X: x, Y: y}
+
+	res := make([]geom.Coordinates, 0)
+	for _, dir := range directions {
+		if adj := dir(from); g.In(adj) {
+			res = append(res, adj)
+		}
+	}
+
+	return res
+}
+
+func (g Grid[T]) Copy() Grid[T] {
+	dst := make([][]T, len(g))
+	for y, row := range g {
+		dst[y] = make([]T, len(row))
+		copy(dst[y], row)
+	}
+	return dst
 }
 
 // Rudimentary print function
