@@ -122,6 +122,17 @@ func TestSetValueFromToFunc(t *testing.T) {
 	}
 }
 
+func TestIn(t *testing.T) {
+	g := grid.NewGrid[int](2, 2)
+	if g.In(geom.Coordinates{X: -1}) {
+		t.Errorf("grid.In() = %v, Expected %v", true, false)
+	}
+
+	if !g.In(geom.Coordinates{X: 1, Y: 1}) {
+		t.Errorf("grid.In() = %v, Expected %v", false, true)
+	}
+}
+
 func TestForEach(t *testing.T) {
 	g := grid.NewGrid[int](2, 2)
 	g[0][0], g[0][1], g[1][0], g[1][1] = 0, 1, 2, 3
@@ -161,6 +172,44 @@ func TestCountFunc(t *testing.T) {
 	}
 }
 
+func TestAdjacentCoords(t *testing.T) {
+	g := grid.NewGrid[bool](5, 5)
+
+	expectedFst := []geom.Coordinates{{1, 0}, {1, 1}, {0, 1}}
+	if actual := g.AdjacentCoords(0, 0); !slices.Equal(actual, expectedFst) {
+		t.Errorf("grid.AdjacentCoords() = %v, Expected %v", actual, expectedFst)
+	}
+
+	expectedSnd := []geom.Coordinates{
+		{3, 2}, {4, 2}, {4, 3}, {4, 4},
+		{3, 4}, {2, 4}, {2, 3}, {2, 2},
+	}
+	if actual := g.AdjacentCoords(3, 3); !slices.Equal(actual, expectedSnd) {
+		t.Errorf("grid.AdjacentCoords() = %v, Expected %v", actual, expectedSnd)
+	}
+
+	expectedTrd := []geom.Coordinates{{4, 2}, {4, 4}, {3, 4}, {3, 3}, {3, 2}}
+	if actual := g.AdjacentCoords(4, 3); !slices.Equal(actual, expectedTrd) {
+		t.Errorf("grid.AdjacentCoords() = %v, Expected %v", actual, expectedTrd)
+	}
+}
+
+func TestCopy(t *testing.T) {
+	g := grid.NewGridDefault[int](3, 3, 10)
+	g[2][2] = 71
+	g[1][0] = 9
+
+	actual := g.Copy()
+	if !areGridsEqual(g, actual) {
+		t.Errorf("grid.Copy() = %v, Expected %v", g, actual)
+	}
+
+	g[1][0] = -1
+	if actual[1][0] == -1 {
+		t.Errorf("grid.Copy() = %v, Expected %v", g, actual)
+	}
+}
+
 // Helper Functions
 
 func isGridFilledWithValue(g grid.Grid[int], v int) bool {
@@ -169,6 +218,15 @@ func isGridFilledWithValue(g grid.Grid[int], v int) bool {
 			if cell != v {
 				return false
 			}
+		}
+	}
+	return true
+}
+
+func areGridsEqual(g1 grid.Grid[int], g2 grid.Grid[int]) bool {
+	for y, row := range g1 {
+		if !slices.Equal(row, g2[y]) {
+			return false
 		}
 	}
 	return true
