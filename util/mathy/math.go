@@ -1,5 +1,7 @@
 package mathy
 
+import "math"
+
 type Number interface {
 	~int | ~int8 | ~int16 | ~int32 | ~int64 |
 		~uint | ~uint8 | ~uint16 | ~uint32 | ~uint64 | ~uintptr |
@@ -26,4 +28,12 @@ func Min[T Number](nums ...T) T {
 	}
 
 	return minNum
+}
+
+func Mod(a, n int) int {
+	return ((a % n) + n) % n
+}
+
+func FloorDiv(a, b int) int {
+	return int(math.Floor(float64(a) / float64(b)))
 }
