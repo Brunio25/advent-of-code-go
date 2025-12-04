@@ -94,6 +94,18 @@ func (g Grid[T]) ForEach(fn func(x, y int, v T)) {
 	}
 }
 
+func (g Grid[T]) Iterator() iter.Seq2[geom.Coordinates, T] {
+	return func(yield func(geom.Coordinates, T) bool) {
+		for y, row := range g {
+			for x, v := range row {
+				if !yield(geom.Coordinates{X: x, Y: y}, v) {
+					return
+				}
+			}
+		}
+	}
+}
+
 func (g Grid[T]) CountFunc(predicate func(T) bool) int {
 	count := 0
 	g.ForEach(func(_, _ int, v T) {
@@ -105,11 +117,10 @@ func (g Grid[T]) CountFunc(predicate func(T) bool) int {
 }
 
 func (g Grid[T]) AdjacentCoords(x, y int) []geom.Coordinates {
-	directions := []Direction{Up, RightUp, Right, RightDown, Down, LeftDown, Left, LeftUp}
 	from := geom.Coordinates{X: x, Y: y}
 
 	res := make([]geom.Coordinates, 0)
-	for _, dir := range directions {
+	for _, dir := range AllDirections {
 		if adj := dir(from); g.In(adj) {
 			res = append(res, adj)
 		}
