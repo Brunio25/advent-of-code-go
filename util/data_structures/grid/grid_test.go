@@ -159,6 +159,31 @@ func TestForEach(t *testing.T) {
 	})
 }
 
+func TestIterator(t *testing.T) {
+	g := grid.NewGrid[int](2, 2)
+	g[0][0], g[0][1], g[1][0], g[1][1] = 0, 1, 2, 3
+	expectedCoordsWithValues := []struct {
+		c   geom.Coordinates
+		val int
+	}{
+		{geom.Coordinates{X: 0, Y: 0}, 0},
+		{geom.Coordinates{X: 1, Y: 0}, 1},
+		{geom.Coordinates{X: 0, Y: 1}, 2},
+		{geom.Coordinates{X: 1, Y: 1}, 3},
+	}
+
+	i := 0
+	for c, v := range g.Iterator() {
+		expected := expectedCoordsWithValues[i]
+		if expected.c != c || expected.val != v {
+			t.Errorf("grid.Iterator() = (Coordinates%v, val = %v), Expected (Coordinates%v, val = %v)",
+				c, v, expected.c, expected.val)
+			return
+		}
+		i++
+	}
+}
+
 func TestCountFunc(t *testing.T) {
 	g := grid.NewGrid[rune](2, 40)
 	g[8][1] = 'a'

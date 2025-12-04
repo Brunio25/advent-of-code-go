@@ -34,3 +34,5 @@ func LeftDown(c geom.Coordinates) geom.Coordinates {
 func RightDown(c geom.Coordinates) geom.Coordinates {
 	return geom.Coordinates{X: c.X + 1, Y: c.Y + 1}
 }
+
+var AllDirections = []Direction{Up, RightUp, Right, RightDown, Down, LeftDown, Left, LeftUp}
