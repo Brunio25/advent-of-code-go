@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-func TestToIntSuccess(t *testing.T) {
+func TestToIntSuccessString(t *testing.T) {
 	testCases := []struct {
 		input    string
 		expected int
@@ -19,6 +19,24 @@ func TestToIntSuccess(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(fmt.Sprintf(`"%s"->%v`, tc.input, tc.expected), func(t *testing.T) {
+			if actual := cast.ToInt(tc.input); actual != tc.expected {
+				t.Errorf("cast.ToInt() = %v, Expected %v", actual, tc.expected)
+			}
+		})
+	}
+}
+
+func TestToIntSuccessUint8(t *testing.T) {
+	testCases := []struct {
+		input    uint8
+		expected int
+	}{
+		{'1', 1},
+		{'9', 9},
+	}
+
+	for _, tc := range testCases {
+		t.Run(fmt.Sprintf(`"%v"->%v`, tc.input, tc.expected), func(t *testing.T) {
 			if actual := cast.ToInt(tc.input); actual != tc.expected {
 				t.Errorf("cast.ToInt() = %v, Expected %v", actual, tc.expected)
 			}

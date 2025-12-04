@@ -8,6 +8,7 @@ import (
 // ToInt will convert an arg to an int
 // Supported types:
 //   - string
+//   - uint8
 func ToInt(arg any) int {
 	var val int
 	switch arg.(type) {
@@ -17,6 +18,8 @@ func ToInt(arg any) int {
 		if err != nil {
 			panic("error converting string to int " + err.Error())
 		}
+	case uint8:
+		val = int(arg.(uint8) - '0') // TODO: actual implementation (arg - '0')?
 	default:
 		panic(fmt.Sprintf("unhandled type for int casting %T", arg))
 	}
