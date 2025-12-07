@@ -9,6 +9,7 @@ import (
 // Supported types:
 //   - string
 //   - uint8
+//   - rune
 func ToInt(arg any) int {
 	var val int
 	switch arg.(type) {
@@ -19,7 +20,9 @@ func ToInt(arg any) int {
 			panic("error converting string to int " + err.Error())
 		}
 	case uint8:
-		val = int(arg.(uint8) - '0') // TODO: actual implementation (arg - '0')?
+		val = int(arg.(uint8) - '0')
+	case rune:
+		val = int(arg.(rune) - '0')
 	default:
 		panic(fmt.Sprintf("unhandled type for int casting %T", arg))
 	}

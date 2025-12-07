@@ -44,6 +44,24 @@ func TestToIntSuccessUint8(t *testing.T) {
 	}
 }
 
+func TestToIntSuccessRune(t *testing.T) {
+	testCases := []struct {
+		input    rune
+		expected int
+	}{
+		{'1', 1},
+		{'9', 9},
+	}
+
+	for _, tc := range testCases {
+		t.Run(fmt.Sprintf(`"%v"->%v`, tc.input, tc.expected), func(t *testing.T) {
+			if actual := cast.ToInt(tc.input); actual != tc.expected {
+				t.Errorf("cast.ToInt() = %v, Expected %v", actual, tc.expected)
+			}
+		})
+	}
+}
+
 func TestToIntInvalidInput(t *testing.T) {
 	defer func() {
 		t.Helper()
