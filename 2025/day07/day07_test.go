@@ -1,0 +1,43 @@
+package day07
+
+import (
+	"advent-of-code-go/util/tests"
+	_ "embed"
+	"testing"
+)
+
+//go:embed input.txt
+var input string
+
+var exampleInput = `.......S.......
+...............
+.......^.......
+...............
+......^.^......
+...............
+.....^.^.^.....
+...............
+....^.^...^....
+...............
+...^.^...^.^...
+...............
+..^...^.....^..
+...............
+.^.^.^.^.^...^.
+...............`
+
+func TestPart1(t *testing.T) {
+	testCases := tests.TestInputs[int]{
+		{"Example", exampleInput, 21},
+		{"Actual", input, 1660},
+	}
+	tests.RunWithTestCases(testCases, part1, t)
+}
+
+func TestPart2(t *testing.T) {
+	testCases := tests.TestInputs[int]{
+		{"Example", exampleInput, 40},
+		{"Actual", input, 305999729392659},
+	}
+	tests.RunWithTestCases(testCases, part2, t)
+}

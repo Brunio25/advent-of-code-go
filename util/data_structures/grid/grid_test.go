@@ -248,7 +248,7 @@ func isGridFilledWithValue(g grid.Grid[int], v int) bool {
 	return true
 }
 
-func areGridsEqual(g1 grid.Grid[int], g2 grid.Grid[int]) bool {
+func areGridsEqual[T grid.CellValue](g1 grid.Grid[T], g2 grid.Grid[T]) bool {
 	for y, row := range g1 {
 		if !slices.Equal(row, g2[y]) {
 			return false
