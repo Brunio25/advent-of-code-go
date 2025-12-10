@@ -30,8 +30,8 @@ func part2(input string) int {
 	return removedRolls
 }
 
-func getAccessibleRolls(g grid.Grid[bool]) []geom.Coordinates {
-	accessibleRolls := make([]geom.Coordinates, 0)
+func getAccessibleRolls(g grid.Grid[bool]) []geom.Coordinates2D {
+	accessibleRolls := make([]geom.Coordinates2D, 0)
 
 	for coord, isRoll := range g.Iterator() {
 		if !isRoll {

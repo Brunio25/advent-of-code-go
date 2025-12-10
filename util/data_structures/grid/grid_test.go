@@ -78,7 +78,7 @@ func TestValueAtCoordinates(t *testing.T) {
 	value := 101
 	g := grid.NewGrid[int](4, 4)
 	g[2][3] = value
-	if actual := g.ValueAtCoordinates(geom.Coordinates{X: 3, Y: 2}); actual != value {
+	if actual := g.ValueAtCoordinates(geom.Coordinates2D{X: 3, Y: 2}); actual != value {
 		t.Errorf("grid.ValueAtCoordinates() = %v, Expected %v", actual, value)
 	}
 }
@@ -94,13 +94,13 @@ func TestValueAt(t *testing.T) {
 
 func TestSetValueFromTo(t *testing.T) {
 	g := grid.NewGrid[bool](7, 7)
-	from, to := geom.Coordinates{X: 2, Y: 1}, geom.Coordinates{X: 5, Y: 4}
+	from, to := geom.Coordinates2D{X: 2, Y: 1}, geom.Coordinates2D{X: 5, Y: 4}
 	g.SetValueFromTo(from, to, grid.RightDown, true)
 
-	expectedTrueCoords := []geom.Coordinates{{X: 2, Y: 1}, {X: 3, Y: 2}, {X: 4, Y: 3}, {X: 5, Y: 4}}
+	expectedTrueCoords := []geom.Coordinates2D{{X: 2, Y: 1}, {X: 3, Y: 2}, {X: 4, Y: 3}, {X: 5, Y: 4}}
 	for y, row := range g {
 		for x, val := range row {
-			if val && !slices.Contains(expectedTrueCoords, geom.Coordinates{X: x, Y: y}) {
+			if val && !slices.Contains(expectedTrueCoords, geom.Coordinates2D{X: x, Y: y}) {
 				t.Errorf("grid.SetValueFromTo() %v, Expected true %v", g, expectedTrueCoords)
 			}
 		}
@@ -109,13 +109,13 @@ func TestSetValueFromTo(t *testing.T) {
 
 func TestSetValueFromToFunc(t *testing.T) {
 	g := grid.NewGrid[bool](7, 7)
-	from, to := geom.Coordinates{X: 2, Y: 1}, geom.Coordinates{X: 5, Y: 4}
+	from, to := geom.Coordinates2D{X: 2, Y: 1}, geom.Coordinates2D{X: 5, Y: 4}
 	g.SetValueFromToFunc(from, to, grid.RightDown, func(b bool) bool { return true })
 
-	expectedTrueCoords := []geom.Coordinates{{X: 2, Y: 1}, {X: 3, Y: 2}, {X: 4, Y: 3}, {X: 5, Y: 4}}
+	expectedTrueCoords := []geom.Coordinates2D{{X: 2, Y: 1}, {X: 3, Y: 2}, {X: 4, Y: 3}, {X: 5, Y: 4}}
 	for y, row := range g {
 		for x, val := range row {
-			if val && !slices.Contains(expectedTrueCoords, geom.Coordinates{X: x, Y: y}) {
+			if val && !slices.Contains(expectedTrueCoords, geom.Coordinates2D{X: x, Y: y}) {
 				t.Errorf("grid.SetValueFromTo()\n%v\n\n-> Expected true %v", g, expectedTrueCoords)
 			}
 		}
@@ -124,11 +124,11 @@ func TestSetValueFromToFunc(t *testing.T) {
 
 func TestIn(t *testing.T) {
 	g := grid.NewGrid[int](2, 2)
-	if g.In(geom.Coordinates{X: -1}) {
+	if g.In(geom.Coordinates2D{X: -1}) {
 		t.Errorf("grid.In() = %v, Expected %v", true, false)
 	}
 
-	if !g.In(geom.Coordinates{X: 1, Y: 1}) {
+	if !g.In(geom.Coordinates2D{X: 1, Y: 1}) {
 		t.Errorf("grid.In() = %v, Expected %v", false, true)
 	}
 }
@@ -137,13 +137,13 @@ func TestForEach(t *testing.T) {
 	g := grid.NewGrid[int](2, 2)
 	g[0][0], g[0][1], g[1][0], g[1][1] = 0, 1, 2, 3
 	expectedCoordsWithValues := []struct {
-		c   geom.Coordinates
+		c   geom.Coordinates2D
 		val int
 	}{
-		{geom.Coordinates{X: 0, Y: 0}, 0},
-		{geom.Coordinates{X: 1, Y: 0}, 1},
-		{geom.Coordinates{X: 0, Y: 1}, 2},
-		{geom.Coordinates{X: 1, Y: 1}, 3},
+		{geom.Coordinates2D{X: 0, Y: 0}, 0},
+		{geom.Coordinates2D{X: 1, Y: 0}, 1},
+		{geom.Coordinates2D{X: 0, Y: 1}, 2},
+		{geom.Coordinates2D{X: 1, Y: 1}, 3},
 	}
 
 	i := 0
@@ -151,7 +151,7 @@ func TestForEach(t *testing.T) {
 		t.Helper()
 		expected := expectedCoordsWithValues[i]
 		if expected.c.X != x || expected.c.Y != y || expected.val != v {
-			t.Errorf("grid.ForEach() = (Coordinates{%v, %v}, val = %v), Expected (Coordinates{%v, %v}, val = %v)",
+			t.Errorf("grid.ForEach() = (Coordinates2D{%v, %v}, val = %v), Expected (Coordinates2D{%v, %v}, val = %v)",
 				x, y, v, expected.c.X, expected.c.Y, expected.val)
 			return
 		}
@@ -163,20 +163,20 @@ func TestIterator(t *testing.T) {
 	g := grid.NewGrid[int](2, 2)
 	g[0][0], g[0][1], g[1][0], g[1][1] = 0, 1, 2, 3
 	expectedCoordsWithValues := []struct {
-		c   geom.Coordinates
+		c   geom.Coordinates2D
 		val int
 	}{
-		{geom.Coordinates{X: 0, Y: 0}, 0},
-		{geom.Coordinates{X: 1, Y: 0}, 1},
-		{geom.Coordinates{X: 0, Y: 1}, 2},
-		{geom.Coordinates{X: 1, Y: 1}, 3},
+		{geom.Coordinates2D{X: 0, Y: 0}, 0},
+		{geom.Coordinates2D{X: 1, Y: 0}, 1},
+		{geom.Coordinates2D{X: 0, Y: 1}, 2},
+		{geom.Coordinates2D{X: 1, Y: 1}, 3},
 	}
 
 	i := 0
 	for c, v := range g.Iterator() {
 		expected := expectedCoordsWithValues[i]
 		if expected.c != c || expected.val != v {
-			t.Errorf("grid.Iterator() = (Coordinates%v, val = %v), Expected (Coordinates%v, val = %v)",
+			t.Errorf("grid.Iterator() = (Coordinates2D%v, val = %v), Expected (Coordinates2D%v, val = %v)",
 				c, v, expected.c, expected.val)
 			return
 		}
@@ -200,12 +200,12 @@ func TestCountFunc(t *testing.T) {
 func TestAdjacentCoords(t *testing.T) {
 	g := grid.NewGrid[bool](5, 5)
 
-	expectedFst := []geom.Coordinates{{1, 0}, {1, 1}, {0, 1}}
+	expectedFst := []geom.Coordinates2D{{1, 0}, {1, 1}, {0, 1}}
 	if actual := g.AdjacentCoords(0, 0); !slices.Equal(actual, expectedFst) {
 		t.Errorf("grid.AdjacentCoords() = %v, Expected %v", actual, expectedFst)
 	}
 
-	expectedSnd := []geom.Coordinates{
+	expectedSnd := []geom.Coordinates2D{
 		{3, 2}, {4, 2}, {4, 3}, {4, 4},
 		{3, 4}, {2, 4}, {2, 3}, {2, 2},
 	}
@@ -213,7 +213,7 @@ func TestAdjacentCoords(t *testing.T) {
 		t.Errorf("grid.AdjacentCoords() = %v, Expected %v", actual, expectedSnd)
 	}
 
-	expectedTrd := []geom.Coordinates{{4, 2}, {4, 4}, {3, 4}, {3, 3}, {3, 2}}
+	expectedTrd := []geom.Coordinates2D{{4, 2}, {4, 4}, {3, 4}, {3, 3}, {3, 2}}
 	if actual := g.AdjacentCoords(4, 3); !slices.Equal(actual, expectedTrd) {
 		t.Errorf("grid.AdjacentCoords() = %v, Expected %v", actual, expectedTrd)
 	}

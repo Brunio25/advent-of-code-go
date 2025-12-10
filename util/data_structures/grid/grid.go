@@ -40,7 +40,7 @@ func NewGridDefault[T CellValue](xSize, ySize int, defaultValue T) Grid[T] {
 	return g
 }
 
-func (g Grid[T]) ValueAtCoordinates(c geom.Coordinates) T {
+func (g Grid[T]) ValueAtCoordinates(c geom.Coordinates2D) T {
 	return g[c.Y][c.X]
 }
 
@@ -48,7 +48,7 @@ func (g Grid[T]) ValueAt(x, y int) T {
 	return g[y][x]
 }
 
-func (g Grid[T]) SetValueAtCoordinates(c geom.Coordinates, val T) {
+func (g Grid[T]) SetValueAtCoordinates(c geom.Coordinates2D, val T) {
 	g[c.Y][c.X] = val
 }
 
@@ -56,22 +56,22 @@ func (g Grid[T]) SetValueAt(x, y int, val T) {
 	g[y][x] = val
 }
 
-func (g Grid[T]) SetValueFromTo(from, to geom.Coordinates, dir Direction, value T) {
+func (g Grid[T]) SetValueFromTo(from, to geom.Coordinates2D, dir Direction, value T) {
 	g.SetValueFromToFunc(from, to, dir, func(_ T) T { return value })
 }
 
-func (g Grid[T]) SetValueFromToFunc(from, to geom.Coordinates, dir Direction, transform func(T) T) {
+func (g Grid[T]) SetValueFromToFunc(from, to geom.Coordinates2D, dir Direction, transform func(T) T) {
 	for c := range coordsBetween(from, to, dir) {
 		g[c.Y][c.X] = transform(g.ValueAtCoordinates(c))
 	}
 }
 
-func (g Grid[T]) In(coords geom.Coordinates) bool {
+func (g Grid[T]) In(coords geom.Coordinates2D) bool {
 	return coords.Y >= 0 && coords.Y < len(g) && coords.X >= 0 && coords.X < len(g[0])
 }
 
-func coordsBetween(from, to geom.Coordinates, dir Direction) iter.Seq[geom.Coordinates] {
-	return func(yield func(geom.Coordinates) bool) {
+func coordsBetween(from, to geom.Coordinates2D, dir Direction) iter.Seq[geom.Coordinates2D] {
+	return func(yield func(geom.Coordinates2D) bool) {
 		lastCoord := from
 		if !yield(lastCoord) {
 			return
@@ -94,11 +94,11 @@ func (g Grid[T]) ForEach(fn func(x, y int, v T)) {
 	}
 }
 
-func (g Grid[T]) Iterator() iter.Seq2[geom.Coordinates, T] {
-	return func(yield func(geom.Coordinates, T) bool) {
+func (g Grid[T]) Iterator() iter.Seq2[geom.Coordinates2D, T] {
+	return func(yield func(geom.Coordinates2D, T) bool) {
 		for y, row := range g {
 			for x, v := range row {
-				if !yield(geom.Coordinates{X: x, Y: y}, v) {
+				if !yield(geom.Coordinates2D{X: x, Y: y}, v) {
 					return
 				}
 			}
@@ -116,10 +116,10 @@ func (g Grid[T]) CountFunc(predicate func(T) bool) int {
 	return count
 }
 
-func (g Grid[T]) AdjacentCoords(x, y int) []geom.Coordinates {
-	from := geom.Coordinates{X: x, Y: y}
+func (g Grid[T]) AdjacentCoords(x, y int) []geom.Coordinates2D {
+	from := geom.Coordinates2D{X: x, Y: y}
 
-	res := make([]geom.Coordinates, 0)
+	res := make([]geom.Coordinates2D, 0)
 	for _, dir := range AllDirections {
 		if adj := dir(from); g.In(adj) {
 			res = append(res, adj)

@@ -61,14 +61,14 @@ func actionToFuncPart2(action Action) func(int) int {
 	}
 }
 
-func setGridValuesSquareShape[T grid.CellValue](from, to geom.Coordinates, g grid.Grid[T], transform func(T) T) {
+func setGridValuesSquareShape[T grid.CellValue](from, to geom.Coordinates2D, g grid.Grid[T], transform func(T) T) {
 	ys, xs := []int{from.Y, to.Y}, []int{from.X, to.X}
 	slices.Sort(ys)
 	slices.Sort(xs)
 
 	for y := ys[0]; y <= ys[1]; y++ {
-		g.SetValueFromToFunc(geom.Coordinates{X: xs[0], Y: y},
-			geom.Coordinates{X: xs[1], Y: y},
+		g.SetValueFromToFunc(geom.Coordinates2D{X: xs[0], Y: y},
+			geom.Coordinates2D{X: xs[1], Y: y},
 			grid.Right,
 			transform)
 	}
@@ -76,8 +76,8 @@ func setGridValuesSquareShape[T grid.CellValue](from, to geom.Coordinates, g gri
 
 type Instruction struct {
 	action Action
-	from   geom.Coordinates
-	to     geom.Coordinates
+	from   geom.Coordinates2D
+	to     geom.Coordinates2D
 }
 
 type Action int
@@ -112,10 +112,10 @@ func parseInput(input string) iter.Seq[Instruction] {
 
 var extractCoordsPattern = regexp.MustCompile(`(\d+),(\d+) through (\d+),(\d+)`)
 
-func getCoordinates(line string) (start, end geom.Coordinates) {
+func getCoordinates(line string) (start, end geom.Coordinates2D) {
 	matches := extractCoordsPattern.FindStringSubmatch(line)
-	start = geom.Coordinates{X: cast.ToInt(matches[1]), Y: cast.ToInt(matches[2])}
-	end = geom.Coordinates{X: cast.ToInt(matches[3]), Y: cast.ToInt(matches[4])}
+	start = geom.Coordinates2D{X: cast.ToInt(matches[1]), Y: cast.ToInt(matches[2])}
+	end = geom.Coordinates2D{X: cast.ToInt(matches[3]), Y: cast.ToInt(matches[4])}
 	return
 }
 
