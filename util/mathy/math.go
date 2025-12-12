@@ -37,3 +37,10 @@ func Mod(a, n int) int {
 func FloorDiv(a, b int) int {
 	return int(math.Floor(float64(a) / float64(b)))
 }
+
+func Abs(a int) int {
+	if a < 0 {
+		return -1.0 * a
+	}
+	return a
+}
